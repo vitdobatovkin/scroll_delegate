@@ -1,8 +1,11 @@
 from web3 import Web3
 from web3.middleware import geth_poa_middleware
-import random
+from random import shuffle, uniform, randint
+from time import sleep
 
 RPC = 'https://scroll-rpc.publicnode.com'
+
+TO_SLEEP_ACC = [1, 100]
 
 # Your target contract address
 contract_address = "0x7600174E2a730a05da046fFA8Fc32DEC27FfdDC8"
@@ -75,6 +78,10 @@ for i in range(len(private_keys)):
     # Attempt to send the transaction, catching any errors
     try:
         send_transaction()
+
+        delay = randint(TO_SLEEP_ACC[0], TO_SLEEP_ACC[1])
+        sleep(delay)
+        print(f'Сплю: {delay}')
     except ValueError as e:
         print(f'Error sending transaction for wallet {account_address}: {e}')
         # Optionally add logic to adjust gas and retry if needed
